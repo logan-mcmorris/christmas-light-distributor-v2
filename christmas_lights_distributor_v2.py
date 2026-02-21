@@ -53,7 +53,6 @@ def generate(mainList):
 
         newList.append(generations)
     newList = list(itertools.product(*newList))
-    print(newList)
     return(newList)
 
 #returns a list of the combinations with the least max slide
@@ -105,6 +104,8 @@ def slide(mainList, placeholder):
 #5) Highest minimum subgroup gap
 #6) Fewest subgroup gaps
 placeholder = 'X'
-mainList = distribute({'🔴':3, '🟢':3, '🔵':2, '🟡':2}, placeholder)
+mainDict = {'🔴':3, '🟢':3, '🔵':2, '🟡':2} #CREATE DICTIONARY HERE
+print('Your items:', mainDict)
+mainList = distribute(mainDict, placeholder)
 mainList = generate(mainList)
 mainlist = slide(mainList, placeholder)
