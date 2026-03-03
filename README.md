@@ -1,7 +1,7 @@
 # Christmas Light Distributor v2
 This distributor takes different amounts of different items in a list and sorts them so they "appear" even when lined up, accounting for looping. Please use the second version; the first is inefficient and is included for historic purposes.
 
-<img width="633" height="70" alt="image" src="https://github.com/user-attachments/assets/6d3b81d8-9dc5-4335-8a65-a96d0b2bbdad" />
+<img width="438" height="108" alt="image" src="https://github.com/user-attachments/assets/9a1ecffb-0f37-4243-a06e-2d507650650c" />
 
 ## Personal Anecdotes
 ### Why I made this
@@ -48,7 +48,7 @@ This project was a nightmare to code due to these main problems:
    ['🔴', 'X', '🔴', 'X'] | ['🔴', 'X', '🔴', 'X']  
    ['🟢', 'X', '🟢', 'X'] | ['X', '🟢', 'X', '🟢']
    ```
-Output: `Solution Found: 🔴🟢🔴🟢 🔴🟢🔴🟢`<br><br>
+Output: `Solution Found: 🔴🟢🔴🟢`<br><br>
 The original plan included finding the best solution if a perfect one didn't exist by sliding individual elements into "slots" nearby. This proved to be difficult and will instead be implemented into version 3.
 
 ### Old version:
