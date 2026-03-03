@@ -6,21 +6,29 @@ import copy
 #Converts a dictionary of values to a list of perfectly distributed values.
 #Ex: {'A':2, 'B:4'} -> [[A, X, X, A, X, X], [B, X, B, B, X, B]]
 def distribute(mainDict, placeholder):
-    mainList = []
+    mainList = [] #will contain a list of lists, one list for each key
     total = sum(mainDict.values())
 
     #distribute each item into a list
     firstIteration = True
+
     for key in mainDict:
+
+        #get the spacing between the key
+        spacing = total / mainDict[key]
+        step = spacing
+
+        #create a list with one item of the key
         subList = [key]
-        quotient = total / mainDict[key]
-        step = quotient
+
+        #generate the rest of the list based off of the spacing
         for i in range(total - 1):
             if  (i + 1) >= step:
                 subList.append(key)
-                step += quotient
+                step += spacing
             else:
                 subList.append(placeholder)
+
         mainList.append(subList)
     return(mainList)
 
@@ -37,7 +45,7 @@ def distribute(mainDict, placeholder):
 
 #NOTES:
 #The first sublist ('A' in the example) does not iterate to prevent duplicate solutions that are just shifted by 1.
-#A solution check is only performed while on the final sublist ('C' in the example)
+#A solution check is only performed while on the final (deepest) sublist ('C' in the example)
 #The iteration for a particular sublist is stopped early to prevent multiples of the same solution:
 #Example: ['A', '-', '-','A', '-', '-'] will appear twice, so we stop 3 iterations in.
 def generate(mainList, iterList, placeholder, index = 1):
