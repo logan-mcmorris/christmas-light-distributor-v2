@@ -1,5 +1,3 @@
-import math
-import itertools
 import copy
 
 
@@ -33,6 +31,7 @@ def distribute(mainDict, placeholder):
     return(mainList)
 
 
+#Finds and returns solutions given a list of distributed lists.
 #This is a recursive function that iterates through every permutation of mainList.
 #To do this, it uses a copy of mainList, "iterList."
 #Visual representation with one 'A' 'B' and 'C':
@@ -48,30 +47,36 @@ def distribute(mainDict, placeholder):
 #A solution check is only performed while on the final (deepest) sublist ('C' in the example)
 #The iteration for a particular sublist is stopped early to prevent multiples of the same solution:
 #Example: ['A', '-', '-','A', '-', '-'] will appear twice, so we stop 3 iterations in.
-def generate(mainList, iterList, placeholder, index = 1):
+def generate(mainList, iterList, placeholder, index = 1, solutionList = []):
 
     #iterate through iterList (length of iterList) times
     for i in range(len(iterList[0])):
 
         #if there are deeper sublists, recursively call the function
         if index + 2 <= len(iterList):
-            generate(mainList, iterList, placeholder, index + 1)
+            generate(mainList, iterList, placeholder, index + 1, solutionList)
         #else, we're on the final sublist, check the solution
         else:
-            solution_check(iterList, placeholder)
+            compiledCandidate = solution_check(iterList, placeholder)
+            if compiledCandidate != 0:
+                solutionList.append(compiledCandidate)
 
         #insert the last element into the first slot
         iterList[index].insert(0,iterList[index].pop())
 
         #stop early if the current sublist matches same mainList sublist
         if iterList[index] == mainList[index]:
-            return()
+            return(solutionList)
 
 
+#Returns 0 if the candidate isn't a solution, and the formatted candidate if it is.
+#Prints the formatted solution
 #Checks if all of the sublists in a list have exactly one value, throughout all of the sublists, for each index
 #Success exmple: [['A', '-', '-'], ['-', 'B', '-'], ['-', '-', 'C']]
 #Fail exmple: [['A', '-', '-'], ['B', '-', '-'], ['-', '-', 'C']]
 def solution_check(candidate, placeholder):
+    compiledCandidate = []
+
     #iterates len(iterlist) times
     for i in range (len(candidate[0])):
         sum = 0
@@ -79,38 +84,31 @@ def solution_check(candidate, placeholder):
         for subList in candidate:
             if subList[i] != placeholder:
                 sum += 1
+                compiledCandidate.append(subList[i])
         #if sum > 1, the check fails and ends
         if sum > 1:
-            return()
+            return(0)
 
-    #solution found!
-    solution_formatting(candidate, placeholder)
-
-
-#formats the solution (in this case, into a print statement)
-def solution_formatting(solution, placeholder):
-
-    #compile the solution into a single list, going one index at a time
-    compiledSolution = []
-    for i in range (len(solution[0])):
-        for subList in solution:
-            if subList[i] != placeholder:
-                compiledSolution.append(subList[i])
-    
-    #print the compiled solution (formatting avoids bugs with emojis)
-    formatting = ''
-    for i in compiledSolution:
-        formatting += i
-    print(f'Solution Found: {formatting} {formatting}')
+    #solution found, print and return the solution
+    print('Solution found:',' '.join(compiledCandidate))
+    return(compiledCandidate)
 
 
+#Original problem: {'🔴':3, '🟢':3, '🔵':2, '🟡':2}
 def main():
-    placeholder = 'x' #the character used for empty space in the sublists
+    placeholder = None #the value used for empty space in the sublists
     mainDict = {'🔴':3, '🟢':3, '🔵':2, '🟡':2} #items to be sorted
-
     print('Your items:', mainDict)
+    print('Searching for solutions...')
+
     mainList = distribute(mainDict, placeholder)
-    mainList = generate(mainList, copy.deepcopy(mainList), placeholder)
+    solutionList = generate(mainList, copy.deepcopy(mainList), placeholder)
+
+    #print solution number
+    if solutionList:
+        print(f'{len(solutionList)} solutions found!')
+    else:
+        print('No solutions found.')
 
 
 if __name__ == "__main__":
