@@ -1,11 +1,11 @@
 # Christmas Light Distributor v2
-This distributor takes different amounts of different items in a list and sorts them so they "appear" even when lined up, accounting for looping. **This project is incomplete.** Some code doesn't have a use and some is meant to serve a later, never implemented purpose. Please use the second version; the first is inefficient and is included for historic purposes.
+This distributor takes different amounts of different items in a list and sorts them so they "appear" even when lined up, accounting for looping. Please use the second version; the first is inefficient and is included for historic purposes.
 
 <img width="633" height="70" alt="image" src="https://github.com/user-attachments/assets/6d3b81d8-9dc5-4335-8a65-a96d0b2bbdad" />
 
 ## Personal Anecdotes
 ### Why I made this
-I got a set of screw-on Christmas lights that came with 18 red and green bulbs, but only 12 blue and yellow bulbs. The question: how do I order these lights so they look even? After my friend showed me a better solution than I thought was possible, I tried to code an algorithm to solve it. After programming my first version, there were still issues with inaccurate results and an incredibly slow time complexity of O(n!), motivating me to code an improved version.
+I got a set of screw-on Christmas lights that came with 18 red and green bulbs, but only 12 blue and yellow bulbs. The question: how do I order these lights so they look even? After my friend showed me a better solution than I thought was possible, I tried to code an algorithm to solve it. After programming my first version, there were still issues with inaccurate results and it was incredibly slow, motivating me to code an improved version.
 
 ### What I learned
 This project was one of the most beneficial projects from a learning standpoint. I learned:
@@ -30,20 +30,21 @@ This project was a nightmare to code due to these main problems:
 - Making the algorithm work for looping fundamentally changes the entire approach
 
 ## How it works
-It's worth noting that this program is much more complex than it needs to be, but currently lacks the functionality of analyzing the best solution which would benefit from this complexity.
 
 ### New version:
 1. Set up the dictionary to include the items and the amount.\
   `mainDict = {'🔴':2, '🟢':2}`<br><br>
 2. The program takes the dictionary and distributes them evenly into a list of lists. A placeholder is used to keep the empty space.\
   `[['🔴', 'X', '🔴', 'X'], ['🟢', 'X', '🟢', 'X']]`<br><br>
-3. The program generates the every looping configuration of the lists. For optimization, it prevents the first sublist from iterating.\
-   `[[['🔴', 'X', '🔴', 'X']], [['🟢', 'X', '🟢', 'X'], ['X', '🟢', 'X', '🟢']]]`<br><br>
-4. The cartesian product is taken of the sublists.\
-   `[(['🔴', 'X', '🔴', 'X'], ['🟢', 'X', '🟢', 'X']), (['🔴', 'X', '🔴', 'X'], ['X', '🟢', 'X', '🟢'])]`<br><br>
-5. The lists are "slid" on top of each other, and if every spot is taken up, we have a perfect solution.
+3. The program generates the every permutation, using recursion, of the sublists. For optimization, it prevents the first sublist from iterating and prevents duplicate sublists.\
    ```
-   These don't slot in.    | These do.
+   [['🔴', 'X', '🔴', 'X'], ['🟢', 'X', '🟢', 'X']]
+   [['🔴', 'X', '🔴', 'X'], ['X', '🟢', 'X', '🟢']]
+   ```
+   
+4. The sublists are compared to see if index [i] has only one element present throughout all of the lists. In other words, if they are placed on top of each other, we check to see if they "align."
+   ```
+   These don't align.      | These do.
    ['🔴', 'X', '🔴', 'X'] | ['🔴', 'X', '🔴', 'X']  
    ['🟢', 'X', '🟢', 'X'] | ['X', '🟢', 'X', '🟢']
    ```
