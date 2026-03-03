@@ -47,7 +47,7 @@ It's worth noting that this program is much more complex than it needs to be, bu
    ['🔴', 'X', '🔴', 'X'] | ['🔴', 'X', '🔴', 'X']  
    ['🟢', 'X', '🟢', 'X'] | ['X', '🟢', 'X', '🟢']
    ```
-Output: `Semi-perfect solution found: 🔴🟢🔴🟢🔴🟢🔴🟢`<br><br>
+Output: `Solution Found: 🔴🟢🔴🟢 🔴🟢🔴🟢`<br><br>
 The original plan included finding the best solution if a perfect one didn't exist by sliding individual elements into "slots" nearby. This proved to be difficult and will instead be implemented into version 3.
 
 ### Old version:
